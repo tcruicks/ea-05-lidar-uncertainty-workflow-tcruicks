@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # ea-05-lidar-chm-uncertainty-class-tcruicks.ipynb
 
 Notebook downloads and analyzes LIDAR CHM tree height estimates with insitu observations at two NEON field sites.
@@ -14,7 +13,14 @@ In it's current form, one class and three functions are imported from external /
 
 The data set used is downloaded from the [EarthPy](https://earthpy.readthedocs.io/en/latest/#) package.  The data set is called 'spatial-vector-lidar' and can be found under [EarthPy Data Subsets](https://earthpy.readthedocs.io/en/latest/earthpy-data-subsets.html#)
 
+The environment needed for this project is called earth-analytics-python.  The environment.yml file is included in this repository.  To install the environment do the following:
+
+>> conda env create -f environment.yml.
+  Once the environment is installed you can activate it using: c
+>> conda activate earth-analytics-python.
+  To view a list of all conda environments available on your machine run: 
+>> conda info --envs.
+
 Author: Tyler Cruickshank
 tcruicks@gmail.com
 March 2023
->>>>>>> 279e2e05958fa6b86c5106519f19751cbee0ec9b
