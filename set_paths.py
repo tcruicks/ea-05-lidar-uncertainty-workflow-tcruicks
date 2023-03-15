@@ -4,8 +4,7 @@ def set_paths(study_site):
 
     Parameters:
     ----------
-    study_sites: str
-        Name of study site for analysis.
+
     """
 
     import os
@@ -30,7 +29,7 @@ def set_paths(study_site):
 
     # ----------------------------------
 
-    # Ground based measurements.
+    # Ground based measurement file.
     if (study_site == 'sjer'):
         insitu_path = os.path.join(
             base_dir,
@@ -56,11 +55,12 @@ def set_paths(study_site):
         "{}_lidarCHM.tif".format(study_site),
     )
 
+    # plots_path: Path to study site point locations.
     if (study_site == 'sjer'):
         plots_path = os.path.join(
             base_dir,
             'vector_data',
-            "{}_plot_centroids.shp".format(study_site)  
+            "{}_plot_centroids.shp".format(study_site)
         )
     elif (study_site == 'soap'):
         plots_path = os.path.join(
@@ -69,19 +69,15 @@ def set_paths(study_site):
             "{}_centroids.shp".format(study_site)
         )
 
+    # USA country boundary file.
     usa_bndry_path = os.path.join(
         home_dir, 'usa', 'usa-boundary-dissolved.shp')
-    
+
+    # States boundary file.
     states_bndry_path = os.path.join(
         home_dir, 'usa', 'usa-states-census-2014.shp')
 
-    places_path = os.path.join(
-        home_dir, 
-        'california', 
-        'ca-places-boundaries', 
-        'CA_Places_TIGER2016.shp'
-        )
-
+    # Road geometry in study area.
     if (study_site == 'sjer'):
         county = 'madera'
         roads_shp = 'tl_2013_06039_roads.shp'
@@ -91,23 +87,24 @@ def set_paths(study_site):
         roads_shp = 'tl_2018_06019_roads.shp'
 
     roads_path = os.path.join(
-        home_dir, 
+        home_dir,
         'california',
-        "{}-county-roads".format(county), 
+        "{}-county-roads".format(county),
         roads_shp
-        )
-        
+    )
+
+    # Study site boundary geometry file.
     aoi_path = os.path.join(
-        base_dir,  
-        'vector_data', 
+        base_dir,
+        'vector_data',
         "{}_crop.shp".format(study_site.upper())
-        )
+    )
 
     os.chdir(home_dir)
-    
+
     return (
-        home_dir, plots_path, insitu_path, 
-        lidar_chm_path, output_path, usa_bndry_path, 
-        states_bndry_path, places_path, roads_path, 
+        home_dir, plots_path, insitu_path,
+        lidar_chm_path, output_path, usa_bndry_path,
+        states_bndry_path, roads_path,
         aoi_path
-        )
+    )

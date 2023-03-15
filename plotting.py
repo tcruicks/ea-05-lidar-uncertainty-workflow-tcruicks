@@ -6,6 +6,7 @@ import seaborn as sns
 
 ###################################
 
+
 def quick_plot(lidar, points, study_site):
     """ 
     Creates a quick plot given a raster image and point file.
@@ -37,6 +38,7 @@ def quick_plot(lidar, points, study_site):
 
 ###################################
 
+
 def create_comparison_plots(all_heights_gdf, study_site):
     """ 
     Create two plots of lidar vs insitu : MAx and Mean tree heights.
@@ -44,6 +46,8 @@ def create_comparison_plots(all_heights_gdf, study_site):
     ----------
     all_heights_gdf: geodataframe
         Geodataframe holding merged lidar and insitu stats.
+    study_site: str
+        Name of study_site
     """
 
     # Why do I need to convert from a gdf to a df in order to plot?
@@ -52,20 +56,20 @@ def create_comparison_plots(all_heights_gdf, study_site):
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(8, 4), layout="constrained")
 
     all_heights_gdf.plot('lidar_max',
-                        'insitu_max',
-                        kind='scatter',
-                        fontsize=14, s=20,
-                        color="purple",
-                        ax=ax1
-                        )
+                         'insitu_max',
+                         kind='scatter',
+                         fontsize=14, s=20,
+                         color="purple",
+                         ax=ax1
+                         )
 
     all_heights_gdf.plot('lidar_mean',
-                        'insitu_mean',
-                        kind='scatter',
-                        fontsize=14, s=20,
-                        color="purple",
-                        ax=ax2
-                        )
+                         'insitu_mean',
+                         kind='scatter',
+                         fontsize=14, s=20,
+                         color="purple",
+                         ax=ax2
+                         )
 
     # Auto-detect what value to use for the y & x axis max.
     # Get the max values for max and mean.
@@ -81,7 +85,7 @@ def create_comparison_plots(all_heights_gdf, study_site):
         y_mx = int(round(y_mx/10) * 10)
     else:
         y_mx = int(round(in_mx/10) * 10)
-            
+
     # Figure out if lidar or insitu is larger.
     # Assign max value where true to y-axis mean.
     if (lid_mn >= in_mn):
@@ -92,7 +96,7 @@ def create_comparison_plots(all_heights_gdf, study_site):
 
     # Set up the x and y axes range.
     # Set tick intervals.
-    ax1.set(xlim=[0,y_mx], ylim=[0, y_mx])
+    ax1.set(xlim=[0, y_mx], ylim=[0, y_mx])
     ax1.set_aspect('equal')
     ax1.xaxis.set_major_locator(plt.MaxNLocator(5))
     ax1.yaxis.set_major_locator(plt.MaxNLocator(5))
@@ -101,7 +105,6 @@ def create_comparison_plots(all_heights_gdf, study_site):
     ax2.set_aspect('equal')
     ax2.xaxis.set_major_locator(plt.MaxNLocator(5))
     ax2.yaxis.set_major_locator(plt.MaxNLocator(5))
-
 
     # Add 1:1 lines ---------
     ax1.plot((0, 1), (0, 1), transform=ax1.transAxes, ls='--', c='k')
@@ -124,11 +127,11 @@ def create_comparison_plots(all_heights_gdf, study_site):
     plt.show()
 ###################################
 
-def plot_maps(
-    lidar, plots, study_site, 
-    cntry_path, states_path, 
-    roads_path, places_path, aoi_path):
 
+def plot_maps(
+        lidar, plots, study_site,
+        cntry_path, states_path,
+        roads_path, aoi_path):
     """ 
     Creates a quick plot given a raster image and point file.
 
@@ -138,6 +141,16 @@ def plot_maps(
         A datarray - Landsat in this case.
     plots: geodataframe
         A geodatframe containing point locations
+    study_site: str
+        Name of study site.
+    cntry_path: str
+        Path to country boundary file.
+    states_path: str
+        Path to states boundary files.
+    roads_path: str
+        Path to road geometry file.
+    aoi_path: str
+        Path to study site boundary geometry.
 
     Returns:
     -------
@@ -179,12 +192,13 @@ def plot_maps(
 
     # Create Lidar map with roads.
     fig2, (ax2) = plt.subplots(1, 1, figsize=(10, 6))
-    
+
     lidar.plot(ax=ax2, label="CHM (m)")
     plots.plot(ax=ax2, marker='s', markersize=50000, color='red')
-    roads_reproj_clip_gdf.plot(ax=ax2, color='black', linewidth=2, label='Roads')
+    roads_reproj_clip_gdf.plot(
+        ax=ax2, color='black', linewidth=2, label='Roads')
     # Addding a legend causes the cell execution to take a long time.
-    # I dont know why this is happening.  
+    # I dont know why this is happening.
     # ax2.legend()
 
     # Capitalize study_site for title.
